@@ -1,10 +1,77 @@
 import { CCard, CCardBody, CCardSubtitle, CRow, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from "@coreui/react";
 import { CChart } from "@coreui/react-chartjs";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 
 const Attendance = () => {
+
+    const [attendance, setAttendance] = useState({});
+
+    useEffect(() => {
+      if (!localStorage.getItem('attendance')) {
+        console.log('Creating attendance records...');
+        const getRandom = () => (Math.random() >= 0.5);
+  
+        const initialAttendance = {
+          "Slappy the Frog": Array.from({ length: 12 }, getRandom),
+          "Lilly the Lizard": Array.from({ length: 12 }, getRandom),
+          "Paulrus the Walrus": Array.from({ length: 12 }, getRandom),
+          "Gregory the Goat": Array.from({ length: 12 }, getRandom),
+          "Adam the Anaconda": Array.from({ length: 12 }, getRandom)
+        };
+  
+        localStorage.setItem('attendance', JSON.stringify(initialAttendance));
+        setAttendance(initialAttendance);
+      } else {
+        setAttendance(JSON.parse(localStorage.getItem('attendance')));
+      }
+    }, []);
+  
+    const handleCheckboxChange = (student, day) => {
+      const newAttendance = { ...attendance };
+      newAttendance[student][day] = !newAttendance[student][day];
+      setAttendance(newAttendance);
+      localStorage.setItem('attendance', JSON.stringify(newAttendance));
+    };
+  
+    const countMissing = (days) => days.filter(day  => !day).length;
     return (
+<div>
+         <div className="container mt-4">
+      <div className="table-responsive">
+        <table className="table table-bordered">
+          <thead>
+            <tr>
+              <th className="name-col bg-primary text-white">Student Name</th>
+              {[...Array(30).keys()].map(day => (
+                <th key={day + 1}>{day + 1}</th>
+              ))}
+              <th className="missed-col bg-danger">Days Missed</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.keys(attendance).map(student => (
+              <tr className="student" key={student}>
+                <td className="name-col text-center">{student}</td>
+                {[...Array(30).keys()].map(day => (
+                  <td className="attend-col text-center" key={day}>
+                    <input
+                      type="checkbox"
+                      checked={attendance[student][day]}
+                      onChange={() => handleCheckboxChange(student, day)}
+                    />
+                  </td>
+                ))}
+                <td className="missed-col text-center">{countMissing(attendance[student])}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+
         <CRow className="gap-3">
             <h2>
                 Attendance
@@ -137,6 +204,7 @@ const Attendance = () => {
                 </CTableBody>
             </CTable>
         </CRow>
+        </div>
     )
 }
 

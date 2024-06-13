@@ -4,5 +4,14 @@
 .custom-bg-color {
     background-color: #022f83; /* Your custom color code */
   }
+.cursor{
+  cursor: pointer;
+}
+.text-colour{
+  color: red;
+}
 
-
+.hover-bg-icon:hover {
+  background-color: #cfd0d3;
+  cursor: pointer;
+}

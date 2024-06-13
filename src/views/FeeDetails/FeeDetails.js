@@ -1,182 +1,305 @@
-import { CButton, CCard, CCardBody, CCardTitle, CCol, CForm, CFormInput, CRow } from "@coreui/react"
-import React from "react"
+import { CBadge, CButton, CCard, CCardBody, CCardTitle, CCol, CForm, CFormCheck, CFormInput, CRow, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from "@coreui/react"
+import React, { useState } from "react"
 
-const columns = [
-  {
-    key: 'avatar',
-    label: '',
-    filter: false,
-    sorter: false,
-  },
-  {
-    key: 'name',
-    _style: { width: '20%' },
-  },
-  'registered',
-  { 
-    key: 'role',
-    _style: { width: '20%' }
-  },
-  { 
-    key: 'status',
-    _style: { width: '20%' }
-  },
-  {
-    key: 'show_details',
-    label: '',
-    _style: { width: '1%' },
-    filter: false,
-    sorter: false,
-  },
-]
 const usersData = [
   {
-    id: 1,
+    roll: 1,
     name: 'Samppa Nori',
-    avatar: '1.jpg',
-    registered: '2022/01/01',
-    role: 'Member',
-    status: 'Active',
+    class: '1',
+    section: 'A',
+    totalAmount: '20000',
+    status: 'Paid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
+
   },
   {
-    id: 2,
+    roll: 2,
     name: 'Estavan Lykos',
-    avatar: '2.jpg',
-    registered: '2022/02/07',
-    role: 'Staff',
-    status: 'Banned',
+    class: '2',
+    section: 'B',
+    totalAmount: '43000',
+    status: 'Unpaid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
   {
-    id: 3,
+    roll: 3,
     name: 'Chetan Mohamed',
-    avatar: '3.jpg',
-    registered: '2022/02/07',
-    role: 'Admin',
-    status: 'Inactive',
-    _selected: true,
+    class: '2',
+    section: 'B',
+    totalAmount: '34888',
+    status: 'Unpaid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
   {
-    id: 4,
+    roll: 4,
     name: 'Derick Maximinus',
-    avatar: '4.jpg',
-    registered: '2022/03/19',
-    role: 'Member',
-    status: 'Pending',
+    class: '4',
+    section: 'A',
+    totalAmount: '89000',
+    feeDue : "3432",
+    paidAmount : "34242",
+    status: 'Unpaid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
   {
-    id: 5,
-    name: 'Friderik Dávid',
-    avatar: '5.jpg',
-    registered: '2022/01/21',
-    role: 'Staff',
-    status: 'Active'
+    roll: 5,
+    name: 'Frrollerik Dávroll',
+    class: '5',
+    section: 'B',
+    totalAmount: '23000',
+    feeDue : "3432",
+    paidAmount : "34242",
+    status: 'Paid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
-  { 
-    id: 6,
+  {
+    roll: 6,
     name: 'Yiorgos Avraamu',
-    avatar: '6.jpg',
-    registered: '2022/01/01',
-    role: 'Member',
-    status: 'Active'
+    class: '6',
+    section: 'A',
+    totalAmount: '89000',
+    feeDue : "3432",
+    paidAmount : "34242",
+    status: 'Paid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
   {
-    id: 7,
+    roll: 7,
     name: 'Avram Tarasios',
-    avatar: '7.jpg',
-    registered: '2022/02/07',
-    role: 'Staff',
-    status: 'Banned',
-    _selected: true,
+    class: '7',
+    section: 'A',
+    totalAmount: '23000',
+    feeDue : "3432",
+    paidAmount : "34242",
+    status: 'Unpaid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
   {
-    id: 8,
+    roll: 8,
     name: 'Quintin Ed',
-    avatar: '8.jpg',
-    registered: '2022/02/07',
-    role: 'Admin',
-    status: 'Inactive'
+    class: '8',
+    section: 'A',
+    totalAmount: 'Admin',
+    feeDue : "3432",
+    paidAmount : "34242",
+    status: 'Unpaid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
-  { 
-    id: 9,
+  {
+    roll: 9,
     name: 'Enéas Kwadwo',
-    avatar: '9.jpg',
-    registered: '2022/03/19',
-    role: 'Member',
-    status: 'Pending'
+    class: '9',
+    section: 'B',
+    totalAmount: '89000',
+    feeDue : "3432",
+    paidAmount : "34242",
+    status: 'Unpaid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
-  { 
-    id: 10,
+  {
+    roll: 10,
     name: 'Agapetus Tadeáš',
-    avatar: '10.jpg',
-    registered: '2022/01/21',
-    role: 'Staff',
-    status: 'Active'
+    class: '10',
+    section: 'C',
+    totalAmount: '23000',
+    feeDue : "3432",
+    paidAmount : "34242",
+    status: 'Unpaid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
-  { 
-    id: 11,
+  {
+    roll: 11,
     name: 'Carwyn Fachtna',
-    avatar: '11.jpg',
-    registered: '2022/01/01',
-    role: 'Member',
-    status: 'Active'
+    class: '11',
+    section: 'C',
+    totalAmount: '89000',
+    feeDue : "3432",
+    paidAmount : "34242",
+    status: 'Paid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
   {
-    id: 12,
+    roll: 12,
     name: 'Nehemiah Tatius',
-    avatar: '12.jpg',
-    registered: '2022/02/07',
-    role: 'Staff',
-    status: 'Banned',
-    _selected: true,
+    class: '12',
+    section: 'A',
+    totalAmount: '23000',
+    feeDue : "3432",
+    paidAmount : "34242",
+    status: 'Unpaid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
   {
-    id: 13,
+    roll: 13,
     name: 'Ebbe Gemariah',
-    avatar: '13.jpg',
-    registered: '2022/02/07',
-    role: 'Admin',
-    status: 'Inactive'
+    class: '13',
+    section: 'A',
+    totalAmount: 'Admin',
+    feeDue : "3432",
+    paidAmount : "34242",
+    status: 'Paid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
   {
-    id: 14,
+    roll: 14,
     name: 'Eustorgios Amulius',
-    avatar: '14.jpg',
-    registered: '2022/03/19',
-    role: 'Member',
-    status: 'Pending',
+    class: '14',
+    section: 'C',
+    totalAmount: '89000',
+    feeDue : "3432",
+    paidAmount : "34242",
+    status: 'Unpaid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
   {
-    id: 15,
+    roll: 15,
     name: 'Leopold Gáspár',
-    avatar: '15.jpg',
-    registered: '2022/01/21',
-    role: 'Staff',
-    status: 'Active'
+    class: '15',
+    section: 'A',
+    totalAmount: '23000',
+    feeDue : "3432",
+    paidAmount : "34242",
+    status: 'Paid',
+    message: "Send A Message",
+    lastPay: '20/02/2024',
   },
 ]
+
+const paidCandidates = usersData.filter((data) => data.status === "Paid");
+const unpaidCandidates = usersData.filter((data) => data.status === "Unpaid");
+let seperateCandidates = [...unpaidCandidates, ...paidCandidates];
+
+
 const FeeDetails = () => {
-return(
-    <CCard className="p-3">
-        <CCardTitle>All Fees Collection</CCardTitle>
-       <CForm md={3} >
-        <CRow>
-        <CCol md={3} className="mb-2">
-        <CFormInput placeholder="Search By Role Number" />
-        </CCol>
-        <CCol md={3} className="mb-2">
-        <CFormInput placeholder="Search By Name"/>
-        </CCol>
-        <CCol md={3} className="mb-2">
-        <CFormInput placeholder="Search By Phone Number" />
-        </CCol>
-        <CCol>
-        <CButton >Friderik</CButton>
-        </CCol>
-        </CRow>
-       </CForm>        
-        
-    </CCard>
-)
+  const [checked, setChecked] = useState(false);
+  const [searchCandidate, setSearchCandidate] = useState(seperateCandidates);
+  const [searchValue, setSearchValue] = useState({
+    roll: "",
+    name: "",
+    class: ""
+  });
+
+  const checkedHandler = () => {
+    setChecked(!checked);
+  }
+
+  const searchHandler = (e) => {
+    const { name, value } = e.target;
+    setSearchValue(
+      {
+        ...searchValue,
+        [name]: value
+      })
+  }
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (searchValue.roll !== "") {
+      console.log(searchValue.roll);
+      const filterValue = usersData.filter((data) => {
+        return data.roll == searchValue.roll.trim()
+      });
+      setSearchCandidate(filterValue)
+
+    }else setSearchCandidate(seperateCandidates)
+    setSearchValue({
+      roll: "",
+      name: "",
+      class: ""
+    })
+  }
+  console.log("outside", seperateCandidates)
+  return (
+    <>
+      <h2>All Fees Collection</h2>
+      <CCard className="p-3 overflow-auto">
+        <CForm md={3} onSubmit={submitHandler} >
+          <CRow>
+            <CCol md={3} className="mb-2">
+              <CFormInput placeholder="Search By Roll Number"
+                name="roll" value={searchValue.roll}
+                onChange={searchHandler}
+              />
+            </CCol>
+            <CCol md={3} className="mb-2">
+              <CFormInput placeholder="Search By Name"
+                name="name" value={searchValue.name}
+                onChange={searchHandler} />
+            </CCol>
+            <CCol md={3} className="mb-2">
+              <CFormInput placeholder="Search By class"
+                name="class" value={searchValue.class}
+                onChange={searchHandler} />
+            </CCol>
+            <CCol>
+              <CButton type="submit">Search</CButton>
+            </CCol>
+          </CRow>
+        </CForm>
+
+        <CTable hover border={1} className="mt-3 text-center" >
+          <CTableHead>
+            <CTableRow>
+              <CTableHeaderCell scope="col">
+                <CFormCheck checked={checked} onChange={checkedHandler} />
+              </CTableHeaderCell>
+              <CTableHeaderCell scope="col">Roll</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+              <CTableHeaderCell scope="col">class</CTableHeaderCell>
+              <CTableHeaderCell scope="col">section</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Paid</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Fee Due</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Total totalAmount</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Status</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Message</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Last Pay</CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+          {searchCandidate && searchCandidate?.map((student) => (
+            <CTableBody key={student.roll}>
+              <CTableRow>
+                <CTableHeaderCell scope="col">
+                  <CFormCheck
+                    defaultChecked={student.status === "Unpaid" && checked}
+                    className="cursor"
+                  />
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="row">{student.roll}</CTableHeaderCell>
+                <CTableDataCell>{student.name}</CTableDataCell>
+                <CTableDataCell>{student.class}</CTableDataCell>
+                <CTableDataCell>{student.section}</CTableDataCell>
+                <CTableDataCell>{student.totalAmount}</CTableDataCell>
+                <CTableDataCell >
+                  <CBadge color={student.status == "Paid" ? "success" : "danger"} className="p-2">{student.status}</CBadge>
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CBadge color="info" className="p-2 cursor"
+                  >{student.message}</CBadge>
+                </CTableDataCell>
+                <CTableDataCell>{student.lastPay}</CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          ))}
+
+        </CTable>
+
+      </CCard>
+    </>
+  )
 }
 
-export default FeeDetails;
+  

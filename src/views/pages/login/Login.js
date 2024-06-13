@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, json } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -17,6 +17,34 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 
 const Login = () => {
+  const [userName,setUserName] = useState("");
+  const [password,setPassword] = useState("");
+
+  const userNameChangedHandler = (e) => {
+    setUserName(e.target.value);
+  }
+  const passwordChangedHandler = (e) => {
+    setPassword(e.target.value);
+  }
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    const login = async() => {
+        const fetchData = await fetch("http://localhost:8083/api/v1/user/login",{
+          method:"POST",
+          body : JSON.stringify({
+            usedId : userName,
+            password : password
+          }),
+          headers : {
+            "Content-Type": "application/json",
+          }
+        })
+        .then(res => console.log(res.data))
+    }
+login();
+  }
+
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -25,7 +53,7 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <CForm onSubmit={loginHandler}>
                     <h1>Login</h1>
                     <p className="text-medium-emphasis">
                       Sign In to your account
@@ -37,6 +65,7 @@ const Login = () => {
                       <CFormInput
                         placeholder="Username"
                         autoComplete="username"
+                        onChange={userNameChangedHandler}
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -47,11 +76,12 @@ const Login = () => {
                         type="password"
                         placeholder="Password"
                         autoComplete="current-password"
+                        onChange={passwordChangedHandler}
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
+                        <CButton color="primary" className="px-4" type='submit'>
                           Login
                         </CButton>
                       </CCol>

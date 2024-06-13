@@ -28,6 +28,8 @@ const Badges = React.lazy(() => import('./views/notifications/badges/Badges'))
 const Modals = React.lazy(() => import('./views/notifications/modals/Modals'))
 const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
+//Roles
+const UserRole = React.lazy(() => import("./views/UserType/UserType"))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -40,7 +42,7 @@ const routes = [
   //student
   { path: '/students', name: 'Students', element: AllStudents, exact: true },
   { path: '/students/allstudents', name: 'Students', element: AllStudents },
-  { path: '/students/class1', name: 'Class I', element: Class_I },
+  { path: '/students/class/:class', name: 'Class I', element: Class_I },
   { path: '/students/:studentId', name: 'studentDetails', element: StudentDetails },
 
   //Teacher
@@ -52,6 +54,10 @@ const routes = [
 
   //FeeDetails
   {path:"accounts/fees", name:"FeeDetails", element: FeeDetails, exact: true},
+
+  //Role
+  {path:"/role", name:"UserRoles", element: UserRole, exact: true},
+
 
 ]
 

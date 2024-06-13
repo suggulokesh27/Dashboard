@@ -16,11 +16,15 @@ import 'simplebar/dist/simplebar.min.css'
 
 // sidebar nav config
 import navigation from '../_nav'
+import { toggleMenubar, toggleSidebar } from 'src/store/ChangeStateSlice'
+import CIcon from '@coreui/icons-react'
+import { cilNoteAdd } from '@coreui/icons'
+import { Title } from 'chart.js'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
-  const unfoldable = useSelector((state) => state.sidebarUnfoldable)
-  const sidebarShow = useSelector((state) => state.sidebarShow)
+  const unfoldable = useSelector((state) => state.ChangeStateSlice.togglebar)
+  const sidebarShow = useSelector((state) => state.ChangeStateSlice.sidebarShow)
 
   return (
     <CSidebar
@@ -28,14 +32,14 @@ const AppSidebar = () => {
       unfoldable={unfoldable}
       visible={sidebarShow}
       onVisibleChange={(visible) => {
-        dispatch({ type: 'set', sidebarShow: visible })
+        dispatch(toggleSidebar(visible))
       }}
       style={{
         backgroundColor:"#042954",
-        color:"black"
+        // color:"black"
       }}
     >
-      <CSidebarBrand className="d-md-flex" to="/">
+      <CSidebarBrand className="d-none d-md-flex" to="/">
           <CImage fluid src={schoolLogo} width="35px" height="35px" />
           <h6 style={{ marginLeft: '10px', marginBottom: '0' }}>Sunshine</h6>
       </CSidebarBrand>
@@ -47,7 +51,7 @@ const AppSidebar = () => {
       <CSidebarToggler
         className="d-none d-lg-flex"
         onClick={() =>
-          dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })
+          dispatch(toggleMenubar(!unfoldable))
         }
       />
     </CSidebar>

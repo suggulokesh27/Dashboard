@@ -87,6 +87,10 @@ const AppHeaderDropdown = () => {
             42
           </CBadge>
         </CDropdownItem>
+        <CDropdownItem href="/role">
+          <CIcon icon={cilFile} className="me-2" />
+          Assign Roles
+        </CDropdownItem>
         <CDropdownDivider />
         <CDropdownItem href="#">
           <CIcon icon={cilLockLocked} className="me-2" />
